@@ -5,7 +5,16 @@ public class PortaController : MonoBehaviour
 {
     private Animator anim;
     private bool isOpen;
-    private bool isInteractable;
+    private bool _isInteractable;
+    private bool isInteractable
+    {
+        get => _isInteractable;
+        set
+        {
+            _isInteractable = value;
+            InteractOM.Interactable(_isInteractable);
+        }
+    }
 
     private void Start()
     {
@@ -18,6 +27,8 @@ public class PortaController : MonoBehaviour
         {
             InteractOM.OnInteract += AbrirPorta;
             isInteractable = true;
+           // InteractOM.Interactable(isInteractable);
+            InteractOM.PositionInteract(transform.position);
         }
     }
 
@@ -27,6 +38,7 @@ public class PortaController : MonoBehaviour
         {
             InteractOM.OnInteract -= AbrirPorta;
             isInteractable = false;
+           // InteractOM.Interactable(isInteractable);
         }
     }
 
