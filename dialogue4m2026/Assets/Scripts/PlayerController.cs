@@ -18,15 +18,34 @@ public class PlayerController : MonoBehaviour
     // internal storage for input
     private Vector2 moveInput = Vector2.zero;
     private Rigidbody rb;
+    private PlayerInput playerInput;
 
     void Awake()
     {
+        playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
         if (cameraTransform == null && Camera.main != null)
             cameraTransform = Camera.main.transform;
 
         // Good defaults for a rolling ball
         rb.interpolation = RigidbodyInterpolation.Interpolate;
+    }
+
+    private void OnEnable()
+    {
+        var action = playerInput.actions.FindAction("Move");
+        if (action != null) action.performed += OnMove;
+    }
+
+    private void OnMove(InputAction.CallbackContext obj)
+    {
+        moveInput = obj.ReadValue<Vector2>();
+    }
+
+    private void OnDisable()
+    {
+        var action = playerInput.actions.FindAction("Move");
+        if (action != null) action.performed -= OnMove;
     }
 
     /// <summary>
@@ -37,8 +56,8 @@ public class PlayerController : MonoBehaviour
     /// <param name="value">InputValue provided by the Input System</param>
     public void OnMove(InputValue value)
     {
-        if (value == null) return;
-        moveInput = value.Get<Vector2>();
+        //if (value == null) return;
+        //moveInput = value.Get<Vector2>();
     }
 
     void FixedUpdate()
