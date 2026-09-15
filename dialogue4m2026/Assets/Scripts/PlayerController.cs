@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput = Vector2.zero;
     private Rigidbody rb;
     private PlayerInput playerInput;
+    private int coins;
 
     void Awake()
     {
@@ -117,6 +118,16 @@ public class PlayerController : MonoBehaviour
     private void OnInteract(InputAction.CallbackContext obj)
     { 
         InteractOM.Interact();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Moeda"))
+        {
+            //pegar moeda
+            coins++;
+            other.GetComponent<MoedaController>().CollectMoeda();
+        }
     }
 }
 
