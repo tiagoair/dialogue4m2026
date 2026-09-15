@@ -4,6 +4,9 @@ using Random = UnityEngine.Random;
 
 public class MoedaSpawnerController : MonoBehaviour
 {
+
+    [SerializeField] private GameObject moedaPrefab;
+    
     [SerializeField] private Vector3 SpawnAreaLimit1;
     [SerializeField] private Vector3 SpawnAreaLimit2;
 
@@ -20,7 +23,7 @@ public class MoedaSpawnerController : MonoBehaviour
         float randx = SpawnAreaLimit1.x+Random.Range(0f, 1f)*(SpawnAreaLimit2.x-SpawnAreaLimit1.x);
         float randz = SpawnAreaLimit1.z+Random.Range(0f, 1f)*(SpawnAreaLimit2.z-SpawnAreaLimit1.z);
         
-        //Instantiate(MoedaPrefab, new Vector3(randx, 1f, randz), Quaternion.identity);
+        //Instantiate(moedaPrefab, new Vector3(randx, 2f, randz), Quaternion.identity);
         MoedaPoolManager.Instance.MoedaPool.Get().transform.position = new Vector3(randx,2f,randz);
     }
 }
