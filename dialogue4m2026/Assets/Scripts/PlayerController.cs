@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Optional camera transform. If null the script will try Camera.main at Awake().")]
     [SerializeField] private Transform cameraTransform = null;
 
+    [SerializeField] private TrailRenderer trailRenderer;
+    
+    
     // internal storage for input
     private Vector2 moveInput = Vector2.zero;
     private Rigidbody rb;
@@ -61,6 +64,9 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         ApplyMovement();
+        
+        if(rb.linearVelocity.magnitude > 4f) trailRenderer.emitting = true;
+        else trailRenderer.emitting = false;
     }
 
     private void ApplyMovement()
